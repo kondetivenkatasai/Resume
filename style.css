@@ -1,0 +1,672 @@
+/* CSS Resume Stylesheet */
+
+/* ==========================================================================
+   1. Design System & CSS Variables
+   ========================================================================== */
+:root {
+    /* Fonts */
+    --font-heading: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+    /* Theme: Noir (Default) */
+    --color-bg: #f8f9fa;
+    --color-resume-bg: #ffffff;
+    --color-text-primary: #111827;
+    --color-text-muted: #4b5563;
+    --color-accent: #000000;
+    --color-border: #e5e7eb;
+    --color-border-accent: #111827;
+    --color-highlight: rgba(0, 0, 0, 0.04);
+    
+    /* Control Panel theme */
+    --panel-bg: #ffffff;
+    --panel-text: #1f2937;
+    --panel-border: #e5e7eb;
+}
+
+/* Theme overrides */
+html[data-theme="navy"] {
+    --color-bg: #f0f4f8;
+    --color-resume-bg: #ffffff;
+    --color-text-primary: #0f172a;
+    --color-text-muted: #475569;
+    --color-accent: #1e3a8a;
+    --color-border: #e2e8f0;
+    --color-border-accent: #1e3a8a;
+    --color-highlight: rgba(30, 58, 138, 0.05);
+}
+
+html[data-theme="warm"] {
+    --color-bg: #fdfbf7;
+    --color-resume-bg: #fcfaf2;
+    --color-text-primary: #2d2a26;
+    --color-text-muted: #5c5852;
+    --color-accent: #7c2d12;
+    --color-border: #e7e3d4;
+    --color-border-accent: #7c2d12;
+    --color-highlight: rgba(124, 45, 18, 0.04);
+}
+
+html[data-theme="teal"] {
+    --color-bg: #f0fdfa;
+    --color-resume-bg: #ffffff;
+    --color-text-primary: #0f2e2d;
+    --color-text-muted: #334e4e;
+    --color-accent: #0f766e;
+    --color-border: #ccfbde;
+    --color-border: #e2e8f0;
+    --color-border-accent: #0f766e;
+    --color-highlight: rgba(15, 118, 110, 0.05);
+}
+
+/* ==========================================================================
+   2. Reset & Layout Setup
+   ========================================================================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--color-bg);
+    color: var(--color-text-primary);
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.5;
+    padding: 40px 20px;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 40px;
+    transition: background-color 0.3s ease;
+}
+
+/* ==========================================================================
+   3. Resume Container & Styling
+   ========================================================================== */
+.resume-container {
+    background-color: var(--color-resume-bg);
+    width: 210mm; /* A4 width */
+    min-height: 297mm; /* A4 height */
+    padding: 45px 50px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+    position: relative;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Header */
+.resume-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.resume-header h1 {
+    font-family: var(--font-heading);
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    color: var(--color-text-primary);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+}
+
+.resume-header .subtitle {
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
+
+.contact-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding: 10px 0;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    font-size: 12px;
+    color: var(--color-text-muted);
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.contact-item svg {
+    color: var(--color-accent);
+}
+
+.contact-item a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.contact-item a:hover {
+    color: var(--color-accent);
+    text-decoration: underline;
+}
+
+.divider {
+    color: var(--color-border);
+}
+
+/* Resume Sections */
+.resume-section {
+    margin-bottom: 24px;
+    position: relative;
+}
+
+.section-title {
+    font-family: var(--font-heading);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: var(--color-text-primary);
+    border-bottom: 1.5px solid var(--color-border-accent);
+    padding-bottom: 4px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+}
+
+.section-content {
+    color: var(--color-text-primary);
+}
+
+.paragraph {
+    color: var(--color-text-muted);
+    font-size: 13px;
+    line-height: 1.6;
+    text-align: justify;
+}
+
+/* Education List */
+.education-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.education-item {
+    position: relative;
+}
+
+.edu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 13px;
+}
+
+.edu-title {
+    font-weight: 600;
+}
+
+.edu-title .institution {
+    color: var(--color-text-primary);
+}
+
+.edu-title .degree {
+    font-weight: 400;
+    color: var(--color-text-muted);
+}
+
+.edu-year {
+    font-size: 12px;
+    color: var(--color-text-muted);
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.meta-separator {
+    color: var(--color-border);
+    margin: 0 6px;
+}
+
+/* Skills Layout */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px 15px;
+    list-style: none;
+}
+
+.skills-grid li {
+    font-size: 13px;
+    color: var(--color-text-muted);
+    position: relative;
+    padding-left: 12px;
+}
+
+.skills-grid li::before {
+    content: "•";
+    color: var(--color-accent);
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.skills-actions {
+    margin-top: 10px;
+}
+
+/* Strengths & Languages list */
+.resume-row {
+    display: flex;
+    gap: 30px;
+}
+
+.col-6 {
+    flex: 1;
+    min-width: 0;
+}
+
+.list-bulleted {
+    list-style: none;
+}
+
+.list-bulleted li {
+    font-size: 13px;
+    color: var(--color-text-muted);
+    margin-bottom: 6px;
+    position: relative;
+    padding-left: 12px;
+}
+
+.list-bulleted li::before {
+    content: "•";
+    color: var(--color-accent);
+    position: absolute;
+    left: 0;
+}
+
+/* Personal Details grid */
+.details-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px 30px;
+}
+
+.details-row {
+    display: flex;
+    font-size: 13px;
+}
+
+.detail-label {
+    font-weight: 600;
+    width: 120px;
+    color: var(--color-text-primary);
+}
+
+.detail-value {
+    color: var(--color-text-muted);
+    flex: 1;
+}
+
+/* Declaration and signature */
+.declaration-section {
+    margin-top: 28px;
+    margin-bottom: 0;
+}
+
+.declaration-signature {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 25px;
+}
+
+.sig-left {
+    font-size: 12px;
+    color: var(--color-text-muted);
+    line-height: 1.8;
+}
+
+.sig-right {
+    text-align: center;
+    width: 200px;
+}
+
+.sig-line {
+    border-bottom: 1px solid var(--color-text-primary);
+    margin-bottom: 8px;
+    width: 100%;
+}
+
+.sig-name {
+    font-size: 13px;
+    color: var(--color-text-primary);
+}
+
+/* ==========================================================================
+   4. Editor Styling (On Screen)
+   ========================================================================== */
+.editable {
+    position: relative;
+    outline: none;
+    transition: background-color 0.2s, box-shadow 0.2s;
+    border-radius: 2px;
+}
+
+.editable:hover {
+    background-color: var(--color-highlight);
+    box-shadow: 0 0 0 3px var(--color-highlight);
+    cursor: text;
+}
+
+.editable:focus {
+    background-color: var(--color-highlight);
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.08);
+}
+
+html[data-theme="navy"] .editable:focus {
+    box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1);
+}
+
+html[data-theme="teal"] .editable:focus {
+    box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.1);
+}
+
+/* Empty placeholder indicator */
+[contenteditable="true"]:empty:before {
+    content: attr(data-placeholder);
+    color: #9ca3af;
+    font-style: italic;
+    cursor: text;
+}
+
+/* Delete Skill / bullet buttons */
+.delete-btn {
+    position: absolute;
+    right: -18px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #ef4444;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 14px;
+    height: 14px;
+    font-size: 9px;
+    line-height: 12px;
+    text-align: center;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+li:hover .delete-btn {
+    opacity: 0.8;
+}
+
+.delete-btn:hover {
+    opacity: 1 !important;
+}
+
+/* ==========================================================================
+   5. Control Panel & Utility Buttons
+   ========================================================================== */
+.control-panel {
+    width: 280px;
+    background-color: var(--panel-bg);
+    border: 1px solid var(--panel-border);
+    border-radius: 8px;
+    padding: 24px;
+    position: sticky;
+    top: 40px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.panel-header h3 {
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--panel-text);
+    margin-bottom: 4px;
+}
+
+.panel-header p {
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.control-group label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--panel-text);
+}
+
+select {
+    padding: 8px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 13px;
+    background-color: #ffffff;
+    cursor: pointer;
+    outline: none;
+}
+
+select:focus {
+    border-color: var(--color-accent);
+}
+
+.button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+    font-family: inherit;
+}
+
+.btn-primary {
+    background-color: var(--color-accent);
+    color: #ffffff;
+}
+
+.btn-primary:hover {
+    opacity: 0.9;
+}
+
+.btn-secondary {
+    background-color: #f3f4f6;
+    color: #374151;
+    border: 1px solid #e5e7eb;
+}
+
+.btn-secondary:hover {
+    background-color: #e5e7eb;
+}
+
+.btn-outline {
+    background: transparent;
+    border: 1px dashed var(--color-border);
+    color: var(--color-text-muted);
+}
+
+.btn-outline:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+    background-color: var(--color-highlight);
+}
+
+.btn-sm {
+    padding: 4px 10px;
+    font-size: 11px;
+    border-radius: 4px;
+}
+
+.panel-footer {
+    display: flex;
+    gap: 8px;
+    font-size: 11px;
+    color: #6b7280;
+    line-height: 1.4;
+    border-top: 1px solid var(--panel-border);
+    padding-top: 15px;
+}
+
+.tip-icon {
+    font-size: 14px;
+}
+
+/* ==========================================================================
+   6. Responsive Styling (Screen Sizes)
+   ========================================================================== */
+@media (max-width: 1024px) {
+    body {
+        flex-direction: column;
+        align-items: center;
+        padding: 20px 10px;
+        gap: 20px;
+    }
+    
+    .control-panel {
+        width: 100%;
+        max-width: 210mm;
+        position: static;
+    }
+}
+
+@media (max-width: 768px) {
+    .resume-container {
+        width: 100%;
+        min-height: auto;
+        padding: 30px 20px;
+    }
+    
+    .edu-header {
+        flex-direction: column;
+        gap: 4px;
+    }
+    
+    .skills-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .resume-row {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .details-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .declaration-signature {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 30px;
+    }
+    
+    .sig-right {
+        width: 100%;
+        max-width: 240px;
+    }
+}
+
+/* ==========================================================================
+   7. Print Optimization Styling
+   ========================================================================== */
+@media print {
+    /* Hide floating items */
+    .no-print, 
+    .control-panel, 
+    .skills-actions,
+    .delete-btn {
+        display: none !important;
+    }
+    
+    body {
+        background-color: #ffffff !important;
+        color: #000000 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        display: block !important;
+    }
+    
+    .resume-container {
+        width: 100% !important;
+        min-height: 100% !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        border-radius: 0 !important;
+        background-color: #ffffff !important;
+    }
+
+    /* Print color properties adjustments */
+    :root {
+        --color-bg: #ffffff;
+        --color-resume-bg: #ffffff;
+        --color-text-primary: #000000;
+        --color-text-muted: #333333;
+        --color-border: #cccccc;
+        --color-border-accent: #000000;
+    }
+
+    html[data-theme="navy"] {
+        --color-accent: #1e3a8a;
+        --color-border-accent: #1e3a8a;
+    }
+    
+    html[data-theme="warm"] {
+        --color-accent: #7c2d12;
+        --color-border-accent: #7c2d12;
+    }
+
+    html[data-theme="teal"] {
+        --color-accent: #0f766e;
+        --color-border-accent: #0f766e;
+    }
+
+    /* Prevent page breaks */
+    .resume-section {
+        page-break-inside: avoid;
+    }
+
+    /* Ensure link tags don't print underlines if not wanted */
+    a {
+        text-decoration: none !important;
+        color: inherit !important;
+    }
+    
+    /* Ensure contenteditable doesn't show cursor or highlights */
+    .editable {
+        outline: none !important;
+        box-shadow: none !important;
+        background-color: transparent !important;
+    }
+}
