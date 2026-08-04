@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // DOM Elements - Inputs & Config
     const themeSelect = document.getElementById('themeSelect');
     const printBtn = document.getElementById('printBtn');
+    const nativePrintBtn = document.getElementById('nativePrintBtn');
     const downloadHtmlBtn = document.getElementById('downloadHtmlBtn');
     const resetBtn = document.getElementById('resetBtn');
     
@@ -310,6 +311,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.body.classList.remove('rendering-pdf');
                 window.print();
             });
+        });
+    }
+
+    if (nativePrintBtn) {
+        nativePrintBtn.addEventListener('click', () => {
+            window.print();
         });
     }
 
