@@ -303,14 +303,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
             
-            // Generate and download PDF directly
-            html2pdf().from(element).set(opt).save().then(() => {
-                document.body.classList.remove('rendering-pdf');
-            }).catch(err => {
-                console.error('PDF direct generation failed, falling back to print dialog:', err);
+            try {
+                // Generate and download PDF directly
+                html2pdf().from(element).set(opt).save().then(() => {
+                    document.body.classList.remove('rendering-pdf');
+                }).catch(err => {
+                    console.error('PDF direct generation failed, falling back to print dialog:', err);
+                    document.body.classList.remove('rendering-pdf');
+                    window.print();
+                });
+            } catch (err) {
+                console.error('html2pdf is not loaded, falling back to print:', err);
                 document.body.classList.remove('rendering-pdf');
                 window.print();
-            });
+            }
         });
     }
 
