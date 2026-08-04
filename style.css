@@ -127,9 +127,9 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 12px;
+    gap: 8px 24px;
     flex-wrap: wrap;
-    padding: 10px 0;
+    padding: 8px 0;
     border-top: 1px solid var(--color-border);
     border-bottom: 1px solid var(--color-border);
     font-size: 12px;
@@ -154,10 +154,6 @@ body {
 .contact-item a:hover {
     color: var(--color-accent);
     text-decoration: underline;
-}
-
-.divider {
-    color: var(--color-border);
 }
 
 /* Resume Sections */

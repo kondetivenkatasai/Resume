@@ -80,6 +80,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Load project delete buttons
         ensureProjectDeleteButtons();
+
+        // Enforce spellcheck="false" on all contenteditables to prevent red squiggly underlines
+        document.querySelectorAll('[contenteditable="true"]').forEach(el => {
+            el.setAttribute('spellcheck', 'false');
+        });
     }
 
     // ==========================================================================
@@ -197,12 +202,12 @@ document.addEventListener('DOMContentLoaded', () => {
         newItem.innerHTML = `
             <div class="project-header">
                 <div class="project-title">
-                    <strong class="editable project-title-text" contenteditable="true" data-placeholder="Project Name">New Project Name</strong>
+                    <strong class="editable project-title-text" contenteditable="true" spellcheck="false" data-placeholder="Project Name">New Project Name</strong>
                     <span class="meta-separator">|</span>
-                    <span class="editable project-tech" contenteditable="true" data-placeholder="Tech Stack/Tools">Tools used</span>
+                    <span class="editable project-tech" contenteditable="true" spellcheck="false" data-placeholder="Tech Stack/Tools">Tools used</span>
                 </div>
             </div>
-            <ul class="list-bulleted editable" contenteditable="true" data-placeholder="Project details...">
+            <ul class="list-bulleted editable" contenteditable="true" spellcheck="false" data-placeholder="Project details...">
                 <li>Describe a key contribution or detail of the project.</li>
                 <li>Click and edit this text freely. Press Enter for new bullets.</li>
             </ul>
