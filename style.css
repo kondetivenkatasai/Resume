@@ -90,7 +90,7 @@ body {
     background-color: var(--color-resume-bg);
     width: 210mm; /* A4 width */
     min-height: 297mm; /* A4 height */
-    padding: 45px 50px;
+    padding: 35px 45px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
     border-radius: 4px;
     position: relative;
@@ -100,7 +100,7 @@ body {
 /* Header */
 .resume-header {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 .resume-header h1 {
@@ -120,7 +120,7 @@ body {
     letter-spacing: 0.25em;
     color: var(--color-text-muted);
     text-transform: uppercase;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .contact-info {
@@ -162,7 +162,7 @@ body {
 
 /* Resume Sections */
 .resume-section {
-    margin-bottom: 24px;
+    margin-bottom: 16px;
     position: relative;
 }
 
@@ -174,7 +174,7 @@ body {
     color: var(--color-text-primary);
     border-bottom: 1.5px solid var(--color-border-accent);
     padding-bottom: 4px;
-    margin-bottom: 12px;
+    margin-bottom: 8px;
     text-transform: uppercase;
 }
 
@@ -185,8 +185,40 @@ body {
 .paragraph {
     color: var(--color-text-muted);
     font-size: 13px;
-    line-height: 1.6;
+    line-height: 1.5;
     text-align: justify;
+}
+
+/* Projects Styling */
+.projects-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.project-item {
+    position: relative;
+}
+
+.project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 13px;
+}
+
+.project-title {
+    font-weight: 600;
+}
+
+.project-tech {
+    font-weight: 400;
+    color: var(--color-text-muted);
+    font-size: 12px;
+}
+
+.project-desc {
+    margin-top: 2px;
 }
 
 /* Education List */

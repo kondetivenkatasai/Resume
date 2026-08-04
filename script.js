@@ -7,17 +7,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const addSkillBtn = document.getElementById('addSkillBtn');
     const addStrengthBtn = document.getElementById('addStrengthBtn');
     const addLanguageBtn = document.getElementById('addLanguageBtn');
+    const addCertBtn = document.getElementById('addCertBtn');
+    const addAchBtn = document.getElementById('addAchBtn');
 
     const resSkills = document.getElementById('resSkills');
     const resStrengths = document.getElementById('resStrengths');
     const resLanguages = document.getElementById('resLanguages');
+    const resCertifications = document.getElementById('resCertifications');
+    const resAchievements = document.getElementById('resAchievements');
 
     // Default Data Backup (for Reset function)
     const originalHTML = {};
     const defaultListHTML = {
         resSkills: resSkills.innerHTML,
         resStrengths: resStrengths.innerHTML,
-        resLanguages: resLanguages.innerHTML
+        resLanguages: resLanguages.innerHTML,
+        resCertifications: resCertifications.innerHTML,
+        resAchievements: resAchievements.innerHTML
     };
 
     // Backup individual editables
@@ -51,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // Load dynamic lists
-        ['resSkills', 'resStrengths', 'resLanguages'].forEach(listId => {
+        ['resSkills', 'resStrengths', 'resLanguages', 'resCertifications', 'resAchievements'].forEach(listId => {
             const savedList = localStorage.getItem(`resume-list-${listId}`);
             if (savedList !== null) {
                 const listEl = document.getElementById(listId);
@@ -160,6 +166,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    if (addCertBtn) {
+        addCertBtn.addEventListener('click', () => {
+            createNewListItem(resCertifications, 'New Certification');
+        });
+    }
+
+    if (addAchBtn) {
+        addAchBtn.addEventListener('click', () => {
+            createNewListItem(resAchievements, 'New Achievement');
+        });
+    }
+
     // Event delegation for list item deletion
     document.addEventListener('click', (e) => {
         if (e.target.classList.contains('delete-btn')) {
@@ -183,7 +201,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('.editable[id]').forEach(el => {
                 localStorage.removeItem(`resume-field-${el.id}`);
             });
-            ['resSkills', 'resStrengths', 'resLanguages'].forEach(listId => {
+            ['resSkills', 'resStrengths', 'resLanguages', 'resCertifications', 'resAchievements'].forEach(listId => {
                 localStorage.removeItem(`resume-list-${listId}`);
             });
             localStorage.removeItem('resume-theme');
