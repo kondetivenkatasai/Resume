@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const addLanguageBtn = document.getElementById('addLanguageBtn');
     const addCertBtn = document.getElementById('addCertBtn');
     const addAchBtn = document.getElementById('addAchBtn');
+    const addProjectBtn = document.getElementById('addProjectBtn');
 
     // List Elements
     const resSkills = document.getElementById('resSkills');
@@ -17,9 +18,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const resLanguages = document.getElementById('resLanguages');
     const resCertifications = document.getElementById('resCertifications');
     const resAchievements = document.getElementById('resAchievements');
+    const resProjects = document.getElementById('resProjects');
 
     // List of dynamic list identifiers to map for saving/restoring
-    const listIds = ['resSkills', 'resStrengths', 'resLanguages', 'resCertifications', 'resAchievements'];
+    const listIds = ['resSkills', 'resStrengths', 'resLanguages', 'resCertifications', 'resAchievements', 'resProjects'];
 
     // Backup individual editables
     const originalHTML = {};
@@ -75,6 +77,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 ensureDeleteButtons(listEl);
             }
         });
+
+        // Load project delete buttons
+        ensureProjectDeleteButtons();
     }
 
     // ==========================================================================
@@ -92,6 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const tempDiv = document.createElement('div');
         tempDiv.innerHTML = listEl.innerHTML;
         tempDiv.querySelectorAll('.delete-btn').forEach(btn => btn.remove());
+        tempDiv.querySelectorAll('.delete-project-btn').forEach(btn => btn.remove());
         
         localStorage.setItem(`resume-list-${listEl.id}`, tempDiv.innerHTML);
     }
@@ -99,10 +105,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // Event delegation for inline edits (autosave on input/blur)
     document.addEventListener('input', (e) => {
         if (e.target.classList.contains('editable')) {
+            // If it's inside the projects list, save the projects list
+            const parentProjects = e.target.closest('#resProjects');
+            if (parentProjects) {
+                saveList(parentProjects);
+                return;
+            }
+
             if (e.target.id) {
                 saveField(e.target);
             } else {
-                // It's a list item
+                // It's a list item of skills, strengths, etc.
                 const parentList = e.target.closest('ul') || e.target.closest('ol');
                 if (parentList) {
                     saveList(parentList);
@@ -124,7 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 4. Dynamic List Actions (Add/Remove)
     // ==========================================================================
     function ensureDeleteButtons(listEl) {
-        if (!listEl) return;
+        if (!listEl || listEl.id === 'resProjects') return; // Projects handle delete buttons separately
         listEl.querySelectorAll('li').forEach(li => {
             if (!li.querySelector('.delete-btn')) {
                 const deleteBtn = document.createElement('button');
@@ -133,6 +146,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 deleteBtn.title = 'Remove item';
                 deleteBtn.contentEditable = false;
                 li.appendChild(deleteBtn);
+            }
+        });
+    }
+
+    function ensureProjectDeleteButtons() {
+        const resProjectsEl = document.getElementById('resProjects');
+        if (!resProjectsEl) return;
+        resProjectsEl.querySelectorAll('.project-item').forEach(item => {
+            if (!item.querySelector('.delete-project-btn')) {
+                const deleteBtn = document.createElement('button');
+                deleteBtn.className = 'delete-project-btn no-print';
+                deleteBtn.innerHTML = '×';
+                deleteBtn.title = 'Remove Project';
+                deleteBtn.contentEditable = false;
+                item.appendChild(deleteBtn);
             }
         });
     }
@@ -158,6 +186,34 @@ document.addEventListener('DOMContentLoaded', () => {
         range.collapse(false);
         sel.removeAllRanges();
         sel.addRange(range);
+    }
+
+    function createNewProject() {
+        const resProjectsEl = document.getElementById('resProjects');
+        if (!resProjectsEl) return;
+        
+        const newItem = document.createElement('div');
+        newItem.className = 'project-item';
+        newItem.innerHTML = `
+            <div class="project-header">
+                <div class="project-title">
+                    <strong class="editable project-title-text" contenteditable="true" data-placeholder="Project Name">New Project Name</strong>
+                    <span class="meta-separator">|</span>
+                    <span class="editable project-tech" contenteditable="true" data-placeholder="Tech Stack/Tools">Tools used</span>
+                </div>
+            </div>
+            <ul class="list-bulleted editable" contenteditable="true" data-placeholder="Project details...">
+                <li>Describe a key contribution or detail of the project.</li>
+                <li>Click and edit this text freely. Press Enter for new bullets.</li>
+            </ul>
+        `;
+        
+        resProjectsEl.appendChild(newItem);
+        ensureProjectDeleteButtons();
+        saveList(resProjectsEl);
+        
+        // Focus the title of the new project
+        newItem.querySelector('.project-title-text').focus();
     }
 
     // Add buttons click handlers (safe-checked)
@@ -191,13 +247,24 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Event delegation for list item deletion
+    if (addProjectBtn) {
+        addProjectBtn.addEventListener('click', () => {
+            createNewProject();
+        });
+    }
+
+    // Event delegation for list item deletion & project deletion
     document.addEventListener('click', (e) => {
         if (e.target.classList.contains('delete-btn')) {
             const li = e.target.parentElement;
             const parentList = li.parentElement;
             li.remove();
             saveList(parentList);
+        } else if (e.target.classList.contains('delete-project-btn')) {
+            const item = e.target.closest('.project-item');
+            const parent = item.parentElement;
+            item.remove();
+            saveList(parent);
         }
     });
 

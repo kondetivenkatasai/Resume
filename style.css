@@ -445,6 +445,33 @@ li:hover .delete-btn {
     opacity: 1 !important;
 }
 
+/* Delete project buttons */
+.delete-project-btn {
+    position: absolute;
+    right: -18px;
+    top: 2px;
+    background: #ef4444;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 14px;
+    height: 14px;
+    font-size: 9px;
+    line-height: 12px;
+    text-align: center;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.project-item:hover .delete-project-btn {
+    opacity: 0.8;
+}
+
+.delete-project-btn:hover {
+    opacity: 1 !important;
+}
+
 /* ==========================================================================
    5. Control Panel & Utility Buttons
    ========================================================================== */
