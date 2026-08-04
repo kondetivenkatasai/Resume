@@ -279,7 +279,37 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================================================
     if (printBtn) {
         printBtn.addEventListener('click', () => {
-            window.print();
+            const element = document.querySelector('.resume-container');
+            
+            // Add helper class to hide editor UI elements during rendering
+            document.body.classList.add('rendering-pdf');
+            
+            // Create a clean filename
+            const rawName = document.getElementById('resName')?.innerText || 'Yenuboyana_Akash';
+            const cleanName = rawName.trim().replace(/\s+/g, '_');
+            
+            const opt = {
+                margin:       [8, 8, 8, 8],
+                filename:     `${cleanName}_Resume.pdf`,
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { 
+                    scale: 2.5, // High DPI for crisp text
+                    useCORS: true,
+                    letterRendering: true,
+                    scrollX: 0,
+                    scrollY: 0
+                },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+            
+            // Generate and download PDF directly
+            html2pdf().from(element).set(opt).save().then(() => {
+                document.body.classList.remove('rendering-pdf');
+            }).catch(err => {
+                console.error('PDF direct generation failed, falling back to print dialog:', err);
+                document.body.classList.remove('rendering-pdf');
+                window.print();
+            });
         });
     }
 

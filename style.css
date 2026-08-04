@@ -725,3 +725,26 @@ select:focus {
         background-color: transparent !important;
     }
 }
+
+/* Styling overrides during direct PDF generation */
+body.rendering-pdf .no-print,
+body.rendering-pdf .skills-actions,
+body.rendering-pdf .delete-btn,
+body.rendering-pdf .delete-project-btn,
+body.rendering-pdf .control-panel {
+    display: none !important;
+}
+
+body.rendering-pdf .resume-container {
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    background-color: var(--color-resume-bg) !important;
+}
+
+body.rendering-pdf .editable {
+    outline: none !important;
+    box-shadow: none !important;
+    background-color: transparent !important;
+}
