@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // DOM Elements - Inputs & Config
     const themeSelect = document.getElementById('themeSelect');
     const printBtn = document.getElementById('printBtn');
+    const downloadHtmlBtn = document.getElementById('downloadHtmlBtn');
     const resetBtn = document.getElementById('resetBtn');
     
     // Add Buttons
@@ -279,6 +280,70 @@ document.addEventListener('DOMContentLoaded', () => {
     if (printBtn) {
         printBtn.addEventListener('click', () => {
             window.print();
+        });
+    }
+
+    if (downloadHtmlBtn) {
+        downloadHtmlBtn.addEventListener('click', () => {
+            // Fetch style.css and script.js contents, inline them into a single file
+            Promise.all([
+                fetch('style.css').then(r => r.text()),
+                fetch('script.js').then(r => r.text())
+            ]).then(([cssContent, jsContent]) => {
+                // Get the current document HTML
+                let htmlContent = document.documentElement.outerHTML;
+                
+                // Parse it into a DOM object to manipulate
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(htmlContent, 'text/html');
+                
+                // Remove the floating settings panel from the downloaded file
+                const controlPanel = doc.getElementById('controlPanel');
+                if (controlPanel) controlPanel.remove();
+                
+                // Replace external style link with inline style tag
+                const styleLink = doc.querySelector('link[href="style.css"]');
+                if (styleLink) {
+                    const styleTag = doc.createElement('style');
+                    styleTag.textContent = cssContent;
+                    styleLink.parentNode.replaceChild(styleTag, styleLink);
+                }
+                
+                // Replace external script link with inline script tag
+                const scriptTagEl = doc.querySelector('script[src="script.js"]');
+                if (scriptTagEl) {
+                    const scriptTag = doc.createElement('script');
+                    // Strip the download button handlers and reset handlers to keep download files static and clean
+                    scriptTag.textContent = `
+                        document.addEventListener('DOMContentLoaded', () => {
+                            // Enforce spellcheck="false" on all contenteditables
+                            document.querySelectorAll('[contenteditable="true"]').forEach(el => {
+                                el.setAttribute('spellcheck', 'false');
+                            });
+                        });
+                    `;
+                    scriptTagEl.parentNode.replaceChild(scriptTag, scriptTagEl);
+                }
+                
+                // Serialize and trigger download
+                const blob = new Blob([doc.documentElement.outerHTML], { type: 'text/html' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                
+                // Create a clean filename
+                const rawName = document.getElementById('resName')?.innerText || 'Yenuboyana_Akash';
+                const cleanName = rawName.trim().replace(/\s+/g, '_');
+                a.download = `${cleanName}_Resume.html`;
+                
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }).catch(err => {
+                console.error('Error creating offline HTML bundle:', err);
+                alert('Could not download HTML file. Please try printing to PDF instead.');
+            });
         });
     }
 
